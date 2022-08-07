@@ -40,9 +40,9 @@ Keypad myKeypad = Keypad(makeKeymap(keymap), rowPins, colPins, numRows, numCols)
 // LCD
 //---------------------------------------------------------------------------------------------
 
-const int RS = A4, E = A5;
-const int D4 = A0, D5 = A1, D6 = A2, D7 = A3;
-LiquidCrystal lcd(RS, E, D4, D5, D6, D7);
+const int rs = A4, en = A5;
+const int d4 = A0, d5 = A1, d6 = A2, d7 = A3;
+LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
 
 //---------------------------------------------------------------------------------------------
 //Programa principal
@@ -164,10 +164,10 @@ const int amarelo = 0;
 const int verde = 1;
 const int vermelho = 2;
 
-void configurarLampada(){
-   pinMode(ledRGB_R, OUTPUT);
-   pinMode(ledRGB_G, OUTPUT);
-   pinMode(ledRGB_B, OUTPUT);
+void configurarLampada() {
+  pinMode(ledRGB_R, OUTPUT);
+  pinMode(ledRGB_G, OUTPUT);
+  pinMode(ledRGB_B, OUTPUT);
 }
 
 void ligarLampada(int cor) {
@@ -197,9 +197,9 @@ void ligarLampada(int cor) {
 }
 
 void desligarLampada() {
-   digitalWrite(ledRGB_R, 0);
-   digitalWrite(ledRGB_G, 0);
-   digitalWrite(ledRGB_B, 0);
+  digitalWrite(ledRGB_R, 0);
+  digitalWrite(ledRGB_G, 0);
+  digitalWrite(ledRGB_B, 0);
 }
 
 void ligarLampadaTemporariamente(int cor, int tempo) {
@@ -217,8 +217,8 @@ void acionarSom(int nota, int duracao) {
 
 void somErro() {
   int duracao = 500;
-  int nota = 494; // b4 
-    
+  int nota = 494; // b4
+
   for (int x = 0; x <= 6; x++) {
     acionarSom(nota, duracao);
     ligarLampadaTemporariamente(vermelho, duracao);
@@ -229,13 +229,13 @@ void somErro() {
 void somAcerto() {
   int duracao = 250;
   int nota = 494; // b4
-  
+
   for (int x = 0; x < 3; x++) {
     acionarSom(nota, duracao);
     ligarLampadaTemporariamente(verde, duracao);
     delay(duracao);
   }
-  
+
   duracao = 1500;
   ligarLampadaTemporariamente(verde, duracao);
   acionarSom(nota, duracao);
@@ -244,9 +244,9 @@ void somAcerto() {
 // Utilitários
 //---------------------------------------------------------------------------------------------
 
-void log(String frase){
+void log(String frase) {
   if (GLOBAL.exibirLog) {
-  	Serial.println(frase);
+    Serial.println(frase);
   }
 }
 
@@ -338,15 +338,15 @@ void setup()
 {
   Serial.begin(9600);
   inicializarVariaveisGlobais();
-  
-  log("Iniciando o setup");    
+
+  log("Iniciando o setup");
   lcd.begin(16, 2);
   pinMode(buzzpin, OUTPUT);
   configurarLampada();
   desligarLampada();
 
   carregandoJogo();
-  setOpcoesDeJogo();  
+  setOpcoesDeJogo();
   log("Terminou o setup");
 }
 
