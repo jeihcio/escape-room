@@ -1,6 +1,7 @@
-#include <Keypad.h>
-#include<LiquidCrystal.h>
 #include<stdlib.h>
+#include <Wire.h> 
+#include <LiquidCrystal_I2C.h>
+#include <Keypad.h>
 
 //---------------------------------------------------------------------------------------------
 // Buzzer
@@ -40,9 +41,14 @@ Keypad myKeypad = Keypad(makeKeymap(keymap), rowPins, colPins, numRows, numCols)
 // LCD
 //---------------------------------------------------------------------------------------------
 
-const int rs = A4, en = A5;
-const int d4 = A0, d5 = A1, d6 = A2, d7 = A3;
-LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
+LiquidCrystal_I2C lcd(0x26, 16, 2);
+
+void iniciarLCD(){
+  lcd.init(); 
+  lcd.clear();          
+  lcd.backlight();  
+  lcd.home();
+}
 
 //---------------------------------------------------------------------------------------------
 //Programa principal
@@ -340,7 +346,7 @@ void setup()
   inicializarVariaveisGlobais();
 
   log("Iniciando o setup");
-  lcd.begin(16, 2);
+  iniciarLCD();
   pinMode(buzzpin, OUTPUT);
   configurarLampada();
   desligarLampada();
