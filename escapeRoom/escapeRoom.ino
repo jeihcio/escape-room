@@ -1,5 +1,5 @@
 #include<stdlib.h>
-#include <Wire.h> 
+#include <Wire.h>
 #include <LiquidCrystal_I2C.h>
 #include <Keypad.h>
 
@@ -43,10 +43,10 @@ Keypad myKeypad = Keypad(makeKeymap(keymap), rowPins, colPins, numRows, numCols)
 
 LiquidCrystal_I2C lcd(0x26, 16, 2);
 
-void iniciarLCD(){
-  lcd.init(); 
-  lcd.clear();          
-  lcd.backlight();  
+void iniciarLCD() {
+  lcd.init();
+  lcd.clear();
+  lcd.backlight();
   lcd.home();
 }
 
@@ -133,8 +133,9 @@ void defineSenhaCorretaDesafioB() {
   while (!definiuSenha) {
     char keypressed = myKeypad.getKey();
 
-    if (keypressed != NO_KEY)
+    if (keypressed != NO_KEY) 
     {
+      acionarSomELuzDaTeclaDigitada();      
       if (keypressed == '#')
       {
         definiuSenha = true;
@@ -316,6 +317,8 @@ void setOpcoesDeJogo() {
     char teclaDigitada = myKeypad.getKey();
 
     if (teclaDigitada != NO_KEY) {
+      acionarSomELuzDaTeclaDigitada();
+
       if ((teclaDigitada == 'A') || (teclaDigitada == 'B')) {
         escolheuOpcao = true;
         GLOBAL.opcaoJogo = teclaDigitada;
