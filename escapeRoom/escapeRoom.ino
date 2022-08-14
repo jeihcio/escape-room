@@ -41,7 +41,7 @@ Keypad myKeypad = Keypad(makeKeymap(keymap), rowPins, colPins, numRows, numCols)
 // LCD
 //---------------------------------------------------------------------------------------------
 
-LiquidCrystal_I2C lcd(0x26, 16, 2);
+LiquidCrystal_I2C lcd(0x27, 16, 2); // dependendo o endereço pode variarar para 0x26, 0x20 etc.
 
 void iniciarLCD() {
   lcd.init();
