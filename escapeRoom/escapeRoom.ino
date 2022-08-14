@@ -244,8 +244,10 @@ void somAcerto() {
   }
 
   duracao = 1500;
-  ligarLampadaTemporariamente(verde, duracao);
+  ligarLampada(verde);
   acionarSom(nota, duracao);
+  delay(duracao);
+  desligarLampada();
 }
 
 // Utilitários
