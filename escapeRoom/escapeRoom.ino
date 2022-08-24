@@ -32,8 +32,8 @@ char keymap[numRows][numCols] =
   {'*', '0', '#', 'D'}
 };
 
-byte rowPins[numRows] = {9, 8, 7, 6};
-byte colPins[numCols] = {5, 4, 3, 2};
+byte rowPins[numRows] = {5, 4, 3, 2};
+byte colPins[numCols] = {9, 8, 7, 6};
 
 Keypad myKeypad = Keypad(makeKeymap(keymap), rowPins, colPins, numRows, numCols);
 
