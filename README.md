@@ -1,38 +1,23 @@
 # Escape Room
-Projeto desenvolvido para Arduino Uno
-
-![Esquema](/EsquemaEletronico.png)
+Convertendo o projeto para o Arduino Nano
 
 ## Instruções
-Instalar a biblioteca "keypad.zip" que está na pasta [bibliotecas](/Bibliotecas)
+Seguir as instruções primárias da branch [main](https://github.com/jeihcio/escape-room/tree/main)
 
-### Instalação
-Sketch > Incluir Biblioteca > Adicionar biblioteca .ZIP
+### Configurações da IDE
 
-#### Atenção
-Na configuração do LCD pode ser que seja necessário alterar o endereço. No código está:
+__Ferramentas__ > 
+  - Placa: Arduino Nano
+  - Processador: ATMega328p (Old Bootloader)
+  - Porta: COM4
+  
+  ## Hardware
+  
+  Para essa versão do projeto estamos usando uma versão diferente de teclado que está no [Tinkercad](https://www.tinkercad.com/things/5OiIE5SMJbv-escape-room). A mudança é mínima, apenas alteramos as portas de conexão. 
+  
+ ```
+ byte rowPins[numRows] = {5, 4, 3, 2};
+ byte colPins[numCols] = {9, 8, 7, 6};
+ ```
 
-```LiquidCrystal_I2C lcd(0x27, 16, 2);```
-
-Mas o 0x27 pode variarar para 0x26, 0x20 etc.
-
-### Componentes necessários
-
-- 1 Arduino Uno R3
-- 1 Keypad 4x4
-- 1 Piezo
-- 1 LED RGB
-- 3 100 Ω Resistor
-- 1 LCD 16 x 2 (Com I2C)
-- 1 250 kΩ Potentiometer
-
-# Modelagem 3d do case do projeto
-
-![Modelagem](/case.png)
-
-## Tinkercad
-Tinkercad é um simulador online para Arduino; no link abaixo contém todo o projeto rodando e funcionando. Além de todo o esquema de montagem dos módulos do Arduino Uno, lista de componentes utilizados e o código fonte. <br/>
-[Visualizar o circuito do projeto](https://www.tinkercad.com/things/5OiIE5SMJbv-escape-room)
-
-Além do simulador o Tinkercad contém uma ferramenta para modelagem 3d, no link abaixo contém a modelagem da caixa do projeto.<br/>
-[Visualizar a modelagem do case](https://www.tinkercad.com/things/iyig3Z6EOqQ-case-para-escape-room)
+Caso queira usar outro teclado, basta alterar nesse trecho de código, ou simplesmente mudar suas conexões no circuito. 
