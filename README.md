@@ -2,7 +2,7 @@
 Convertendo o projeto para o Arduino Nano
 
 ## Instruções
-Seguir as instruções primárias da branch [main](https://github.com/jeihcio/escape-room/tree/main)
+Seguir as instruções primárias da branch [Uno](https://github.com/jeihcio/escape-room/tree/main)
 
 ### Configurações da IDE
 
