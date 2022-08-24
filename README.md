@@ -20,4 +20,4 @@ __Ferramentas__ >
  byte colPins[numCols] = {9, 8, 7, 6};
  ```
 
-Caso queira usar outro teclado, basta alterar nesse trecho de código, ou simplesmente mudar suas conexões no circuito. 
+Caso queira usar outro teclado, basta alterar nesse trecho de código ou simplesmente mudar suas conexões no circuito. 
