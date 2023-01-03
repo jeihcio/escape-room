@@ -350,7 +350,7 @@ void setup()
 {
   log("Iniciando o setup");
   Serial.begin(9600);
-  log("Iniciando as variáveis globais");
+  log("Iniciando as variaveis globais");
   inicializarVariaveisGlobais();
 
   log("Iniciando o LCD");
