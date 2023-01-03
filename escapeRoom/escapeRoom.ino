@@ -133,9 +133,9 @@ void defineSenhaCorretaDesafioB() {
   while (!definiuSenha) {
     char keypressed = myKeypad.getKey();
 
-    if (keypressed != NO_KEY) 
+    if (keypressed != NO_KEY)
     {
-      acionarSomELuzDaTeclaDigitada();      
+      acionarSomELuzDaTeclaDigitada();
       if (keypressed == '#')
       {
         definiuSenha = true;
@@ -261,7 +261,8 @@ void log(String frase) {
 
 void exibirResultado(bool resultado) {
   lcd.clear();
-  delay(700);
+  delay(200);
+  barraDeProgresso("Verificando...", 400);
 
   if (resultado) {
     lcd.print("Acertou !");
@@ -347,16 +348,25 @@ void setOpcoesDeJogo() {
 
 void setup()
 {
+  log("Iniciando o setup");
   Serial.begin(9600);
+  log("Iniciando as variáveis globais");
   inicializarVariaveisGlobais();
 
-  log("Iniciando o setup");
+  log("Iniciando o LCD");
   iniciarLCD();
+  
+  log("Configurando o buzzpin");
   pinMode(buzzpin, OUTPUT);
+  
+  log("Configurando a lampada");
   configurarLampada();
   desligarLampada();
 
+  log("Carregando o jogo");
   carregandoJogo();
+
+  log("Iniciando as opcoes do jogo");
   setOpcoesDeJogo();
   log("Terminou o setup");
 }
