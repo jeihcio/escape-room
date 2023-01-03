@@ -263,6 +263,7 @@ void exibirResultado(bool resultado) {
   lcd.clear();
   delay(200);
   barraDeProgresso("Verificando...", 400);
+  lcd.clear();
 
   if (resultado) {
     lcd.print("Acertou !");
