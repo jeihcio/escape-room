@@ -30,13 +30,6 @@ Mas o 0x27 pode variarar para 0x26, 0x20 etc.
 
 ![Modelagem](/case.png)
 
-### Lista de parafusos
-
-| QTD | Circuferência | Comprimento |
-| --: | --- | --- |
-| 4 | 4mm | 50mm |
-| 1 | 2mm | 01mm |
-
 ## Tinkercad
 Tinkercad é um simulador online para Arduino; no link abaixo contém todo o projeto rodando e funcionando. Além de todo o esquema de montagem dos módulos do Arduino Uno, lista de componentes utilizados e o código fonte. <br/>
 [Visualizar o circuito do projeto](https://www.tinkercad.com/things/5OiIE5SMJbv-escape-room)
