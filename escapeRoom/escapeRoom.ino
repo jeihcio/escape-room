@@ -349,8 +349,10 @@ void setOpcoesDeJogo() {
 
 void setup()
 {
-  log("Iniciando o setup");
   Serial.begin(9600);
+  delay(2000);
+  
+  log("Iniciando o setup");
   log("Iniciando as variaveis globais");
   inicializarVariaveisGlobais();
 
@@ -374,6 +376,7 @@ void setup()
 
 void loop() {
   char keypressed = myKeypad.getKey();
+  log(keypressed);
 
   if (keypressed != NO_KEY)
   {
