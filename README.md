@@ -13,7 +13,7 @@ __Ferramentas__ >
   
   ## Hardware
   
-  Para essa versão do projeto estamos usando uma versão diferente de teclado que está no [Tinkercad](https://www.tinkercad.com/things/5OiIE5SMJbv-escape-room). A mudança é mínima, apenas alteramos as portas de conexão. 
+  Para essa versão do projeto estamos usando uma versão diferente de teclado que está no [Tinkercad](https://www.tinkercad.com/things/5OiIE5SMJbv-escape-room). A mudança é mínima, apenas alteramos as portas de conexões. 
   
  ```
  byte rowPins[numRows] = {5, 4, 3, 2};
