@@ -294,8 +294,8 @@ void log(String frase) {
 
 void exibirResultado(bool resultado) {
   lcd.clear();
-  delay(200);
-  barraDeProgresso("Verificando...", 400);
+  delay(100);
+  barraDeProgresso("Verificando...", 300);
   lcd.clear();
 
   if (resultado) {
@@ -340,14 +340,13 @@ void inicializarVariaveisGlobais() {
 }
 
 void carregandoJogo() {
-  barraDeProgresso("Carregando...", 0);
   lcd.clear();
 }
 
 void setOpcoesDeJogo() {
   lcd.print("Opcao de jogo:");
   lcd.setCursor(0, 1);
-  lcd.print("A,B: ");
+  lcd.print("A,B,C: ");
 
   bool escolheuOpcao = false;
   while (!escolheuOpcao) {
@@ -392,6 +391,9 @@ void setup()
 {
   Serial.begin(9600);
   delay(2000);
+
+  log("Gerando a semente para o random");
+  randomSeed(analogRead(0));
   
   log("Iniciando o setup");
   log("Iniciando as variaveis globais");
