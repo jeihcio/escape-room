@@ -200,6 +200,15 @@ void gerarEExibirDesafioB()
 // DESAFIO C
 //---------------------------------------------------------------------------------------------
 
+long calcularTempoTotalEmMilissegundos(int minutos, int segundos)
+{
+  int milissegundosEmUmMinuto = 60000;
+  int milissegundosEmUmSegundo = 1000;
+
+  int resultado = (minutos * milissegundosEmUmMinuto) + (segundos * milissegundosEmUmSegundo);
+  return resultado;
+}
+
 void defineTempoLimiteDoDesafioC(String textoInferiorLCD, int *VariavelParaSetarValor)
 {
   bool definiuTempo;
@@ -223,20 +232,11 @@ void defineTempoLimiteDoDesafioC(String textoInferiorLCD, int *VariavelParaSetar
       }
       else
       {
-        *VariavelParaSetarValor = (int)keypressed;
+        *VariavelParaSetarValor = atoi(&keypressed);
         lcd.print(keypressed);
       }
     }
   }
-}
-
-long calcularTempoTotalEmMilissegundos(int minutos, int segundos)
-{
-  int milissegundosEmUmMinuto = 60000;
-  int milissegundosEmUmSegundo = 1000;
-
-  int resultado = (minutos * milissegundosEmUmMinuto) + (segundos * milissegundosEmUmSegundo);
-  return resultado;
 }
 
 void defineTempoLimiteDoDesafioC()
@@ -475,10 +475,18 @@ void configurarAOpcoesDoJogo()
         }
         else if (teclaDigitada == 'C')
         {
-          defineTempoLimiteDoDesafioC();
+          log("DESAFIO C");
+
+          defineTempoLimiteDoDesafioC();        
           defineSenhaCorretaDesafioC();
           barraDeProgresso("Iniciando jogo", 50);
           gerarEExibirDesafioC();
+
+          // Exibindo o tempo limite
+          log("Tempo limite:", true);
+          log("   Minutos: " + (String)GLOBAL.tempoLimiteDesafioC.minutos, true);
+          log("   Segundos: " + (String)GLOBAL.tempoLimiteDesafioC.segundos, true);
+          log("   Total em milissegundos: " + (String)GLOBAL.tempoLimiteDesafioC.tempoTotalEmMilissegundos, true);
         }
       }
     }
