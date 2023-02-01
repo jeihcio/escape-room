@@ -449,15 +449,14 @@ void setOpcoesDeJogo()
 
 void setup()
 {
-  Serial.begin(9600);
-  delay(2000);
-
-  log("Gerando a semente para o random");
-  randomSeed(analogRead(0));
-
-  log("Iniciando o setup");
   log("Iniciando as variaveis globais");
   inicializarVariaveisGlobais();
+  
+  log("Iniciando o setup");
+  Serial.begin(9600);
+
+  log("Gerando a semente para o random");
+  randomSeed(analogRead(0));  
 
   log("Iniciando o LCD");
   iniciarLCD();
