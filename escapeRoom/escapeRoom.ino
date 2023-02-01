@@ -147,41 +147,6 @@ bool resolverDesafioA(perguntaAleatoria perguntaDesafioA, String keypressed)
 // DESAFIO B
 //---------------------------------------------------------------------------------------------
 
-void defineTempoLimiteDoDesafioC()
-{
-  bool definiuTempo;
-
-  lcd.print("Define tempo:");
-  lcd.setCursor(0, 1);
-
-  definiuTempo = false;
-  while (!definiuTempo)
-  {
-    char keypressed = myKeypad.getKey();
-
-    if (keypressed != NO_KEY)
-    {
-      acionarSomELuzDaTeclaDigitada();
-      if (keypressed == '#')
-      {
-        definiuTempo = true;
-        lcd.clear();
-      }
-      else
-      {
-        // GLOBAL.tempoLimiteDesafioB += (String)keypressed;
-        lcd.print(keypressed);
-      }
-    }
-  }
-}
-
-void defineSenhaCorretaDesafioC()
-{
-  defineSenhaCorretaDesafioB();
-  GLOBAL.senhaCorretaDesafioC = GLOBAL.senhaCorretaDesafioB;
-}
-
 void defineSenhaCorretaDesafioB()
 {
   bool definiuSenha;
@@ -223,6 +188,49 @@ void gerarEExibirDesafioB()
   gerandoDesafioB();
 }
 
+bool resolverDesafioB(String senhaCorretaDesafioB, String keypressed)
+{
+  return (senhaCorretaDesafioB == keypressed);
+}
+
+// DESAFIO B
+//---------------------------------------------------------------------------------------------
+
+void defineTempoLimiteDoDesafioC()
+{
+  bool definiuTempo;
+
+  lcd.print("Define tempo:");
+  lcd.setCursor(0, 1);
+
+  definiuTempo = false;
+  while (!definiuTempo)
+  {
+    char keypressed = myKeypad.getKey();
+
+    if (keypressed != NO_KEY)
+    {
+      acionarSomELuzDaTeclaDigitada();
+      if (keypressed == '#')
+      {
+        definiuTempo = true;
+        lcd.clear();
+      }
+      else
+      {
+        // GLOBAL.tempoLimiteDesafioB += (String)keypressed;
+        lcd.print(keypressed);
+      }
+    }
+  }
+}
+
+void defineSenhaCorretaDesafioC()
+{
+  defineSenhaCorretaDesafioB();
+  GLOBAL.senhaCorretaDesafioC = GLOBAL.senhaCorretaDesafioB;
+}
+
 void gerarEExibirDesafioC()
 {
   gerandoDesafioB();
@@ -231,11 +239,6 @@ void gerarEExibirDesafioC()
 bool resolverDesafioC(String senhaCorretaDesafioc, String keypressed)
 {
   return resolverDesafioB(senhaCorretaDesafioc, keypressed);
-}
-
-bool resolverDesafioB(String senhaCorretaDesafioB, String keypressed)
-{
-  return (senhaCorretaDesafioB == keypressed);
 }
 
 // Led RGB
