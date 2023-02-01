@@ -1,4 +1,4 @@
-#include<stdlib.h>
+#include <stdlib.h>
 #include <Wire.h>
 #include <LiquidCrystal_I2C.h>
 #include <Keypad.h>
@@ -41,7 +41,7 @@ Keypad myKeypad = Keypad(makeKeymap(keymap), rowPins, colPins, numRows, numCols)
 // LCD
 //---------------------------------------------------------------------------------------------
 
-LiquidCrystal_I2C lcd(0x27, 16, 2); // dependendo o endereço pode variarar para 0x26, 0x20 etc.
+LiquidCrystal_I2C lcd(0x26, 16, 2); // dependendo o endereço pode variarar para 0x26, 0x20 etc.
 
 void iniciarLCD() {
   lcd.init();
@@ -59,11 +59,17 @@ struct perguntaAleatoria {
   int resposta;
 };
 
+struct tempoLimite {
+  int minutos;
+  int segundos;
+};
+
 struct variaveisGlobais {
   char opcaoJogo;
   struct perguntaAleatoria perguntaDesafioA;
   String senhaCorretaDesafioB;
   String teclasDigitadas;
+  struct tempoLimite tempoLimiteDesafioB;
   bool exibirLog;
 };
 
@@ -122,6 +128,33 @@ bool resolverDesafioA(perguntaAleatoria perguntaDesafioA, String keypressed) {
 
 // DESAFIO B
 //---------------------------------------------------------------------------------------------
+
+void defineTempoLimiteDoDesafioB() {
+  bool definiuTempo;
+
+  lcd.print("Define tempo:");
+  lcd.setCursor(0, 1);
+
+  definiuTempo = false;
+  while (!definiuTempo) {
+    char keypressed = myKeypad.getKey();
+
+    if (keypressed != NO_KEY)
+    {
+      acionarSomELuzDaTeclaDigitada();
+      if (keypressed == '#')
+      {
+        definiuTempo = true;
+        lcd.clear();
+      }
+      else
+      {
+        //GLOBAL.tempoLimiteDesafioB += (String)keypressed;
+        lcd.print(keypressed);
+      }
+    }
+  }
+}
 
 void defineSenhaCorretaDesafioB() {
   bool definiuSenha;
@@ -307,7 +340,7 @@ void inicializarVariaveisGlobais() {
 }
 
 void carregandoJogo() {
-  barraDeProgresso("Carregando...", 400);
+  barraDeProgresso("Carregando...", 0);
   lcd.clear();
 }
 
@@ -323,7 +356,9 @@ void setOpcoesDeJogo() {
     if (teclaDigitada != NO_KEY) {
       acionarSomELuzDaTeclaDigitada();
 
-      if ((teclaDigitada == 'A') || (teclaDigitada == 'B')) {
+      if ((teclaDigitada == 'A') || 
+          (teclaDigitada == 'B') || 
+          (teclaDigitada == 'C')) {
         escolheuOpcao = true;
         GLOBAL.opcaoJogo = teclaDigitada;
 
@@ -335,6 +370,12 @@ void setOpcoesDeJogo() {
           gerarEExibirNovaPerguntaDesafioA();
         }
         else if (teclaDigitada == 'B') {
+          defineSenhaCorretaDesafioB();
+          barraDeProgresso("Iniciando jogo", 100);
+          gerarEExibirDesafioB();
+        }
+        else if (teclaDigitada == 'C') {
+          defineTempoLimiteDoDesafioB();
           defineSenhaCorretaDesafioB();
           barraDeProgresso("Iniciando jogo", 100);
           gerarEExibirDesafioB();
