@@ -64,6 +64,7 @@ struct tempoLimite
 {
   int minutos;
   int segundos;
+  long tempoTotalEmMilissegundos;
 };
 
 struct variaveisGlobais
@@ -73,7 +74,7 @@ struct variaveisGlobais
   String senhaCorretaDesafioB;
   String senhaCorretaDesafioC;
   String teclasDigitadas;
-  struct tempoLimite tempoLimiteDesafioB;
+  struct tempoLimite tempoLimiteDesafioC;
   bool exibirLog;
 };
 
@@ -86,6 +87,14 @@ void limparResposta()
   lcd.setCursor(0, 1);
 
   GLOBAL.teclasDigitadas = "";
+}
+
+// MÉTODOS EM COMUM DOS DESAFIOS
+//---------------------------------------------------------------------------------------------
+
+bool verificarSeSenhaDigitadaECorreta(String senhaCorreta, String keypressed)
+{
+  return (senhaCorreta == keypressed);
 }
 
 // DESAFIO A
@@ -188,20 +197,16 @@ void gerarEExibirDesafioB()
   gerandoDesafioB();
 }
 
-bool resolverDesafioB(String senhaCorretaDesafioB, String keypressed)
-{
-  return (senhaCorretaDesafioB == keypressed);
-}
-
 // DESAFIO C
 //---------------------------------------------------------------------------------------------
 
-void defineTempoLimiteDoDesafioC()
+void defineTempoLimiteDoDesafioC(String textoInferiorLCD, int *VariavelParaSetarValor)
 {
   bool definiuTempo;
 
-  lcd.print("Define tempo:");
+  lcd.print("Define o tempo:");
   lcd.setCursor(0, 1);
+  lcd.print(textoInferiorLCD);
 
   definiuTempo = false;
   while (!definiuTempo)
@@ -218,11 +223,28 @@ void defineTempoLimiteDoDesafioC()
       }
       else
       {
-        // GLOBAL.tempoLimiteDesafioB += (String)keypressed;
+        *VariavelParaSetarValor = (int)keypressed;
         lcd.print(keypressed);
       }
     }
   }
+}
+
+long calcularTempoTotalEmMilissegundos(int minutos, int segundos)
+{
+  int milissegundosEmUmMinuto = 60000;
+  int milissegundosEmUmSegundo = 1000;
+
+  int resultado = (minutos * milissegundosEmUmMinuto) + (segundos * milissegundosEmUmSegundo);
+  return resultado;
+}
+
+void defineTempoLimiteDoDesafioC()
+{
+  defineTempoLimiteDoDesafioC("Minutos: ", &GLOBAL.tempoLimiteDesafioC.minutos);
+  defineTempoLimiteDoDesafioC("Segundos: ", &GLOBAL.tempoLimiteDesafioC.segundos);
+
+  GLOBAL.tempoLimiteDesafioC.tempoTotalEmMilissegundos = calcularTempoTotalEmMilissegundos(GLOBAL.tempoLimiteDesafioC.minutos, GLOBAL.tempoLimiteDesafioC.segundos);
 }
 
 void defineSenhaCorretaDesafioC()
@@ -238,7 +260,7 @@ void gerarEExibirDesafioC()
 
 bool resolverDesafioC(String senhaCorretaDesafioc, String keypressed)
 {
-  return resolverDesafioB(senhaCorretaDesafioc, keypressed);
+  return verificarSeSenhaDigitadaECorreta(senhaCorretaDesafioc, keypressed);
 }
 
 // Led RGB
@@ -350,8 +372,8 @@ void log(String frase)
 
 void log(String frase, bool espacamentoNoInicio)
 {
-   String linha = "   " + frase;
-   log(linha);
+  String linha = "   " + frase;
+  log(linha);
 }
 
 void exibirResultado(bool resultado)
@@ -470,7 +492,7 @@ void setup()
 {
   GLOBAL.exibirLog = true;
   Serial.begin(9600);
-  
+
   log("INICIANDO O SETUP");
   log("Configurou a porta serial", true);
 
@@ -524,7 +546,7 @@ void loop()
       else if (GLOBAL.opcaoJogo == 'B')
       {
         delay(800);
-        resposta = resolverDesafioB(GLOBAL.senhaCorretaDesafioB, GLOBAL.teclasDigitadas);
+        resposta = verificarSeSenhaDigitadaECorreta(GLOBAL.senhaCorretaDesafioB, GLOBAL.teclasDigitadas);
         exibirResultado(resposta);
 
         delay(1500);
