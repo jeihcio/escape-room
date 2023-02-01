@@ -212,10 +212,10 @@ long calcularTempoTotalEmMilissegundos(int minutos, int segundos)
   return valoresEmMilissegundos;
 }
 
-int getTempoLimiteDoDesafioC(String textoInferiorLCD)
+String getTempoLimiteDoDesafioC(String textoInferiorLCD)
 {
   bool definiuTempo;
-  int resultado;
+  String resultado;
 
   lcd.print("Define o tempo:");
   lcd.setCursor(0, 1);
@@ -236,7 +236,7 @@ int getTempoLimiteDoDesafioC(String textoInferiorLCD)
       }
       else
       {
-        resultado = atoi(&keypressed);
+        resultado += (String)keypressed;
         lcd.print(keypressed);
       }
     }
@@ -247,8 +247,11 @@ int getTempoLimiteDoDesafioC(String textoInferiorLCD)
 
 void defineTempoLimiteDoDesafioC()
 {
-  GLOBAL.tempoLimiteDesafioC.minutos = getTempoLimiteDoDesafioC("Minutos: ");
-  GLOBAL.tempoLimiteDesafioC.segundos = getTempoLimiteDoDesafioC("Segundos: ");
+  String minutos = getTempoLimiteDoDesafioC("Minutos: ");
+  String segundos = getTempoLimiteDoDesafioC("Segundos: ");
+
+  GLOBAL.tempoLimiteDesafioC.minutos = atoi(minutos.c_str());
+  GLOBAL.tempoLimiteDesafioC.segundos = atoi(segundos.c_str());
 
   long tempoTotalEmMilissegundos = calcularTempoTotalEmMilissegundos(GLOBAL.tempoLimiteDesafioC.minutos, GLOBAL.tempoLimiteDesafioC.segundos);
   GLOBAL.tempoLimiteDesafioC.tempoTotalEmMilissegundos = tempoTotalEmMilissegundos;
