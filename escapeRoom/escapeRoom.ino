@@ -345,6 +345,12 @@ void log(String frase)
   }
 }
 
+void log(String frase, bool espacamentoNoInicio)
+{
+   String linha = "   " + frase;
+   log(linha);
+}
+
 void exibirResultado(bool resultado)
 {
   lcd.clear();
@@ -397,6 +403,7 @@ void inicializarVariaveisGlobais()
   GLOBAL.perguntaDesafioA.pergunta = "";
   GLOBAL.perguntaDesafioA.resposta = 0;
   GLOBAL.senhaCorretaDesafioB = "";
+  GLOBAL.senhaCorretaDesafioC = "";
   GLOBAL.exibirLog = true;
 }
 
@@ -458,31 +465,36 @@ void setOpcoesDeJogo()
 
 void setup()
 {
-  log("Iniciando as variaveis globais");
+  GLOBAL.exibirLog = true;
+  Serial.begin(9600);
+  
+  log("INICIANDO O SETUP");
+  log("Configurou a porta serial", true);
+
+  log("Iniciando as variaveis globais", true);
   inicializarVariaveisGlobais();
 
-  log("Iniciando o setup");
-  Serial.begin(9600);
-
-  log("Gerando a semente para o random");
+  log("Gerando a semente para o random", true);
   randomSeed(analogRead(0));
 
-  log("Iniciando o LCD");
+  log("Iniciando o LCD", true);
   iniciarLCD();
 
-  log("Configurando o buzzpin");
+  log("Configurando o buzzpin", true);
   pinMode(buzzpin, OUTPUT);
 
-  log("Configurando a lampada");
+  log("Configurando a lampada", true);
   configurarLampada();
   desligarLampada();
 
-  log("Carregando o jogo");
+  log("Carregando o jogo", true);
   carregandoJogo();
 
-  log("Iniciando as opcoes do jogo");
+  log("Iniciando as opcoes do jogo", true);
   setOpcoesDeJogo();
-  log("Terminou o setup");
+
+  log("TERMINOU O SETUP");
+  log("");
 }
 
 void loop()
