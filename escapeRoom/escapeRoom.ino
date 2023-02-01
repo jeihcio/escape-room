@@ -266,8 +266,6 @@ void defineSenhaCorretaDesafioC()
 void gerarEExibirDesafioC()
 {
   gerandoDesafioB();
-  GLOBAL.tempoLimiteDesafioC.inicioDoContador = millis();
-  log("inicioDoContador: " + (String)GLOBAL.tempoLimiteDesafioC.inicioDoContador);
 }
 
 bool resolverDesafioC(String senhaCorretaDesafioc, String keypressed)
@@ -503,6 +501,11 @@ void configurarAOpcoesDoJogo()
 
           defineSenhaCorretaDesafioC();
           barraDeProgresso("Iniciando jogo", 50);
+
+          // iniciar contador
+          GLOBAL.tempoLimiteDesafioC.inicioDoContador = millis();
+          log("inicioDoContador: " + (String)GLOBAL.tempoLimiteDesafioC.inicioDoContador);
+
           gerarEExibirDesafioC();
         }
       }
@@ -558,11 +561,12 @@ void setup()
 void loop()
 {
   char keypressed = myKeypad.getKey();
-  log((String)keypressed);
 
   // teclado
   if (keypressed != NO_KEY)
   {
+    //log((String)keypressed);
+
     acionarSomELuzDaTeclaDigitada();
     bool resposta;
 
