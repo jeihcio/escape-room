@@ -370,13 +370,13 @@ void setOpcoesDeJogo() {
         }
         else if (teclaDigitada == 'B') {
           defineSenhaCorretaDesafioB();
-          barraDeProgresso("Iniciando jogo", 100);
+          barraDeProgresso("Iniciando jogo", 50);
           gerarEExibirDesafioB();
         }
         else if (teclaDigitada == 'C') {
           defineTempoLimiteDoDesafioB();
           defineSenhaCorretaDesafioB();
-          barraDeProgresso("Iniciando jogo", 100);
+          barraDeProgresso("Iniciando jogo", 50);
           gerarEExibirDesafioB();
         }
       }
