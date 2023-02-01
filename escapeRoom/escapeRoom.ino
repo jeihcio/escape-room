@@ -25,12 +25,11 @@ const byte numRows = 4;
 const byte numCols = 4;
 
 char keymap[numRows][numCols] =
-{
-  {'1', '2', '3', 'A'},
-  {'4', '5', '6', 'B'},
-  {'7', '8', '9', 'C'},
-  {'*', '0', '#', 'D'}
-};
+    {
+        {'1', '2', '3', 'A'},
+        {'4', '5', '6', 'B'},
+        {'7', '8', '9', 'C'},
+        {'*', '0', '#', 'D'}};
 
 byte rowPins[numRows] = {9, 8, 7, 6};
 byte colPins[numCols] = {5, 4, 3, 2};
@@ -43,7 +42,8 @@ Keypad myKeypad = Keypad(makeKeymap(keymap), rowPins, colPins, numRows, numCols)
 
 LiquidCrystal_I2C lcd(0x26, 16, 2); // dependendo o endereço pode variarar para 0x26, 0x20 etc.
 
-void iniciarLCD() {
+void iniciarLCD()
+{
   lcd.init();
   lcd.clear();
   lcd.backlight();
@@ -51,20 +51,23 @@ void iniciarLCD() {
 }
 
 //---------------------------------------------------------------------------------------------
-//Programa principal
+// Programa principal
 //---------------------------------------------------------------------------------------------
 
-struct perguntaAleatoria {
+struct perguntaAleatoria
+{
   String pergunta;
   int resposta;
 };
 
-struct tempoLimite {
+struct tempoLimite
+{
   int minutos;
   int segundos;
 };
 
-struct variaveisGlobais {
+struct variaveisGlobais
+{
   char opcaoJogo;
   struct perguntaAleatoria perguntaDesafioA;
   String senhaCorretaDesafioB;
@@ -78,7 +81,8 @@ struct variaveisGlobais GLOBAL;
 // DESAFIO A
 //---------------------------------------------------------------------------------------------
 
-struct perguntaAleatoria gerarPerguntaAleatoria() {
+struct perguntaAleatoria gerarPerguntaAleatoria()
+{
   perguntaAleatoria pergunta;
 
   int primeiroNumeroAleatorio, segundoNumeroAleatorio;
@@ -89,25 +93,27 @@ struct perguntaAleatoria gerarPerguntaAleatoria() {
   primeiroNumeroAleatorio = random(0, 10);
   segundoNumeroAleatorio = random(0, 10);
 
-  switch (operacao) {
-    case 0: //adição
-      pergunta.resposta = primeiroNumeroAleatorio + segundoNumeroAleatorio;
-      caracterOperacao = " + ";
-      break;
+  switch (operacao)
+  {
+  case 0: // adição
+    pergunta.resposta = primeiroNumeroAleatorio + segundoNumeroAleatorio;
+    caracterOperacao = " + ";
+    break;
 
-    case 1: //multiplicação
-      pergunta.resposta = primeiroNumeroAleatorio * segundoNumeroAleatorio;
-      caracterOperacao = " * ";
-      break;
+  case 1: // multiplicação
+    pergunta.resposta = primeiroNumeroAleatorio * segundoNumeroAleatorio;
+    caracterOperacao = " * ";
+    break;
   }
 
   pergunta.pergunta = (String)primeiroNumeroAleatorio + caracterOperacao +
-                      (String)segundoNumeroAleatorio  + " = ";
+                      (String)segundoNumeroAleatorio + " = ";
 
   return pergunta;
 }
 
-struct perguntaAleatoria gerarDesafioA() {
+struct perguntaAleatoria gerarDesafioA()
+{
   lcd.clear();
   lcd.print("Responda:");
   lcd.setCursor(0, 1);
@@ -116,12 +122,14 @@ struct perguntaAleatoria gerarDesafioA() {
   return resultado;
 }
 
-void gerarEExibirNovaPerguntaDesafioA() {
+void gerarEExibirNovaPerguntaDesafioA()
+{
   GLOBAL.perguntaDesafioA = gerarDesafioA();
   lcd.print(GLOBAL.perguntaDesafioA.pergunta);
 }
 
-bool resolverDesafioA(perguntaAleatoria perguntaDesafioA, String keypressed) {
+bool resolverDesafioA(perguntaAleatoria perguntaDesafioA, String keypressed)
+{
   int numero = keypressed.toInt();
   return (perguntaDesafioA.resposta == numero);
 }
@@ -129,14 +137,16 @@ bool resolverDesafioA(perguntaAleatoria perguntaDesafioA, String keypressed) {
 // DESAFIO B
 //---------------------------------------------------------------------------------------------
 
-void defineTempoLimiteDoDesafioB() {
+void defineTempoLimiteDoDesafioC()
+{
   bool definiuTempo;
 
   lcd.print("Define tempo:");
   lcd.setCursor(0, 1);
 
   definiuTempo = false;
-  while (!definiuTempo) {
+  while (!definiuTempo)
+  {
     char keypressed = myKeypad.getKey();
 
     if (keypressed != NO_KEY)
@@ -149,21 +159,28 @@ void defineTempoLimiteDoDesafioB() {
       }
       else
       {
-        //GLOBAL.tempoLimiteDesafioB += (String)keypressed;
+        // GLOBAL.tempoLimiteDesafioB += (String)keypressed;
         lcd.print(keypressed);
       }
     }
   }
 }
 
-void defineSenhaCorretaDesafioB() {
+void defineSenhaCorretaDesafioC()
+{
+  defineSenhaCorretaDesafioB();
+}
+
+void defineSenhaCorretaDesafioB()
+{
   bool definiuSenha;
 
   lcd.print("Define senha:");
   lcd.setCursor(0, 1);
 
   definiuSenha = false;
-  while (!definiuSenha) {
+  while (!definiuSenha)
+  {
     char keypressed = myKeypad.getKey();
 
     if (keypressed != NO_KEY)
@@ -183,17 +200,25 @@ void defineSenhaCorretaDesafioB() {
   }
 }
 
-void gerandoDesafioB() {
+void gerandoDesafioB()
+{
   lcd.clear();
   lcd.print("Senha:");
   lcd.setCursor(0, 1);
 }
 
-void gerarEExibirDesafioB() {
+void gerarEExibirDesafioB()
+{
   gerandoDesafioB();
 }
 
-bool resolverDesafioB(String senhaCorretaDesafioB, String keypressed) {
+void gerarEExibirDesafioC()
+{
+  gerandoDesafioB();
+}
+
+bool resolverDesafioB(String senhaCorretaDesafioB, String keypressed)
+{
   return (senhaCorretaDesafioB == keypressed);
 }
 
@@ -204,31 +229,34 @@ const int amarelo = 0;
 const int verde = 1;
 const int vermelho = 2;
 
-void configurarLampada() {
+void configurarLampada()
+{
   pinMode(ledRGB_R, OUTPUT);
   pinMode(ledRGB_G, OUTPUT);
   pinMode(ledRGB_B, OUTPUT);
 }
 
-void ligarLampada(int cor) {
+void ligarLampada(int cor)
+{
   int red, green, blue;
 
-  switch (cor) {
-    case 0:
-      red = 255;
-      green = 255;
-      blue = 0;
-      break;
-    case 1:
-      red = 0;
-      green = 255;
-      blue = 0;
-      break;
-    case 2:
-      red = 255;
-      green = 0;
-      blue = 0;
-      break;
+  switch (cor)
+  {
+  case 0:
+    red = 255;
+    green = 255;
+    blue = 0;
+    break;
+  case 1:
+    red = 0;
+    green = 255;
+    blue = 0;
+    break;
+  case 2:
+    red = 255;
+    green = 0;
+    blue = 0;
+    break;
   }
 
   digitalWrite(ledRGB_R, red);
@@ -236,13 +264,15 @@ void ligarLampada(int cor) {
   digitalWrite(ledRGB_B, blue);
 }
 
-void desligarLampada() {
+void desligarLampada()
+{
   digitalWrite(ledRGB_R, 0);
   digitalWrite(ledRGB_G, 0);
   digitalWrite(ledRGB_B, 0);
 }
 
-void ligarLampadaTemporariamente(int cor, int tempo) {
+void ligarLampadaTemporariamente(int cor, int tempo)
+{
   ligarLampada(cor);
   delay(tempo);
   desligarLampada();
@@ -251,26 +281,31 @@ void ligarLampadaTemporariamente(int cor, int tempo) {
 // Buzzer
 //---------------------------------------------------------------------------------------------
 
-void acionarSom(int nota, int duracao) {
+void acionarSom(int nota, int duracao)
+{
   tone(buzzpin, nota, duracao);
 }
 
-void somErro() {
+void somErro()
+{
   int duracao = 500;
   int nota = 494; // b4
 
-  for (int x = 0; x <= 6; x++) {
+  for (int x = 0; x <= 6; x++)
+  {
     acionarSom(nota, duracao);
     ligarLampadaTemporariamente(vermelho, duracao);
     delay(duracao);
   }
 }
 
-void somAcerto() {
+void somAcerto()
+{
   int duracao = 250;
   int nota = 494; // b4
 
-  for (int x = 0; x < 3; x++) {
+  for (int x = 0; x < 3; x++)
+  {
     acionarSom(nota, duracao);
     ligarLampadaTemporariamente(verde, duracao);
     delay(duracao);
@@ -286,28 +321,35 @@ void somAcerto() {
 // Utilitários
 //---------------------------------------------------------------------------------------------
 
-void log(String frase) {
-  if (GLOBAL.exibirLog) {
+void log(String frase)
+{
+  if (GLOBAL.exibirLog)
+  {
     Serial.println(frase);
   }
 }
 
-void exibirResultado(bool resultado) {
+void exibirResultado(bool resultado)
+{
   lcd.clear();
   delay(100);
   barraDeProgresso("Verificando...", 300);
   lcd.clear();
 
-  if (resultado) {
+  if (resultado)
+  {
     lcd.print("Acertou !");
     somAcerto();
-  } else {
+  }
+  else
+  {
     lcd.print("Errou !");
     somErro();
   }
 }
 
-void acionarSomELuzDaTeclaDigitada() {
+void acionarSomELuzDaTeclaDigitada()
+{
   int duracao = 15;
   int nota = 494; // b4
 
@@ -315,14 +357,16 @@ void acionarSomELuzDaTeclaDigitada() {
   ligarLampadaTemporariamente(amarelo, duracao);
 }
 
-void barraDeProgresso(String texto, int tempoDelay) {
+void barraDeProgresso(String texto, int tempoDelay)
+{
   int tamanhoDisplay = 16;
   int retangulo = 1;
 
   lcd.print(texto);
   lcd.setCursor(0, 1);
 
-  for (int i = 0; i < tamanhoDisplay; i++) {
+  for (int i = 0; i < tamanhoDisplay; i++)
+  {
     lcd.write(retangulo);
     delay(tempoDelay);
   }
@@ -331,7 +375,8 @@ void barraDeProgresso(String texto, int tempoDelay) {
 // Carregamento inicial
 //---------------------------------------------------------------------------------------------
 
-void inicializarVariaveisGlobais() {
+void inicializarVariaveisGlobais()
+{
   GLOBAL.opcaoJogo = 0x00;
   GLOBAL.perguntaDesafioA.pergunta = "";
   GLOBAL.perguntaDesafioA.resposta = 0;
@@ -339,25 +384,30 @@ void inicializarVariaveisGlobais() {
   GLOBAL.exibirLog = true;
 }
 
-void carregandoJogo() {
+void carregandoJogo()
+{
   lcd.clear();
 }
 
-void setOpcoesDeJogo() {
+void setOpcoesDeJogo()
+{
   lcd.print("Opcao de jogo:");
   lcd.setCursor(0, 1);
   lcd.print("A,B,C: ");
 
   bool escolheuOpcao = false;
-  while (!escolheuOpcao) {
+  while (!escolheuOpcao)
+  {
     char teclaDigitada = myKeypad.getKey();
 
-    if (teclaDigitada != NO_KEY) {
+    if (teclaDigitada != NO_KEY)
+    {
       acionarSomELuzDaTeclaDigitada();
 
-      if ((teclaDigitada == 'A') || 
-          (teclaDigitada == 'B') || 
-          (teclaDigitada == 'C')) {
+      if ((teclaDigitada == 'A') ||
+          (teclaDigitada == 'B') ||
+          (teclaDigitada == 'C'))
+      {
         escolheuOpcao = true;
         GLOBAL.opcaoJogo = teclaDigitada;
 
@@ -365,19 +415,22 @@ void setOpcoesDeJogo() {
         delay(1000);
         lcd.clear();
 
-        if (teclaDigitada == 'A') {
+        if (teclaDigitada == 'A')
+        {
           gerarEExibirNovaPerguntaDesafioA();
         }
-        else if (teclaDigitada == 'B') {
+        else if (teclaDigitada == 'B')
+        {
           defineSenhaCorretaDesafioB();
           barraDeProgresso("Iniciando jogo", 50);
           gerarEExibirDesafioB();
         }
-        else if (teclaDigitada == 'C') {
-          defineTempoLimiteDoDesafioB();
-          defineSenhaCorretaDesafioB();
+        else if (teclaDigitada == 'C')
+        {
+          defineTempoLimiteDoDesafioC();
+          defineSenhaCorretaDesafioC();
           barraDeProgresso("Iniciando jogo", 50);
-          gerarEExibirDesafioB();
+          gerarEExibirDesafioC();
         }
       }
     }
@@ -394,17 +447,17 @@ void setup()
 
   log("Gerando a semente para o random");
   randomSeed(analogRead(0));
-  
+
   log("Iniciando o setup");
   log("Iniciando as variaveis globais");
   inicializarVariaveisGlobais();
 
   log("Iniciando o LCD");
   iniciarLCD();
-  
+
   log("Configurando o buzzpin");
   pinMode(buzzpin, OUTPUT);
-  
+
   log("Configurando a lampada");
   configurarLampada();
   desligarLampada();
@@ -417,7 +470,8 @@ void setup()
   log("Terminou o setup");
 }
 
-void loop() {
+void loop()
+{
   char keypressed = myKeypad.getKey();
   log(keypressed);
 
