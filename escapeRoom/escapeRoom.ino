@@ -79,6 +79,15 @@ struct variaveisGlobais
 
 struct variaveisGlobais GLOBAL;
 
+void limparResposta()
+{
+  lcd.setCursor(0, 1);
+  lcd.print("                ");
+  lcd.setCursor(0, 1);
+
+  GLOBAL.teclasDigitadas = "";
+}
+
 // DESAFIO A
 //---------------------------------------------------------------------------------------------
 
@@ -451,12 +460,12 @@ void setup()
 {
   log("Iniciando as variaveis globais");
   inicializarVariaveisGlobais();
-  
+
   log("Iniciando o setup");
   Serial.begin(9600);
 
   log("Gerando a semente para o random");
-  randomSeed(analogRead(0));  
+  randomSeed(analogRead(0));
 
   log("Iniciando o LCD");
   iniciarLCD();
@@ -517,6 +526,14 @@ void loop()
       }
 
       GLOBAL.teclasDigitadas = "";
+    }
+    else if (keypressed == '*')
+    {
+      limparResposta();
+      if (GLOBAL.opcaoJogo == 'A')
+      {
+        lcd.print(GLOBAL.perguntaDesafioA.pergunta);
+      }
     }
     else
     {
