@@ -412,7 +412,7 @@ void carregandoJogo()
   lcd.clear();
 }
 
-void setOpcoesDeJogo()
+void configurarAOpcoesDoJogo()
 {
   lcd.print("Opcao de jogo:");
   lcd.setCursor(0, 1);
@@ -491,7 +491,7 @@ void setup()
   carregandoJogo();
 
   log("Iniciando as opcoes do jogo", true);
-  setOpcoesDeJogo();
+  configurarAOpcoesDoJogo();
 
   log("TERMINOU O SETUP");
   log("");
