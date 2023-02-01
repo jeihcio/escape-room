@@ -71,6 +71,7 @@ struct variaveisGlobais
   char opcaoJogo;
   struct perguntaAleatoria perguntaDesafioA;
   String senhaCorretaDesafioB;
+  String senhaCorretaDesafioC;
   String teclasDigitadas;
   struct tempoLimite tempoLimiteDesafioB;
   bool exibirLog;
@@ -169,6 +170,7 @@ void defineTempoLimiteDoDesafioC()
 void defineSenhaCorretaDesafioC()
 {
   defineSenhaCorretaDesafioB();
+  GLOBAL.senhaCorretaDesafioC = GLOBAL.senhaCorretaDesafioB;
 }
 
 void defineSenhaCorretaDesafioB()
@@ -215,6 +217,11 @@ void gerarEExibirDesafioB()
 void gerarEExibirDesafioC()
 {
   gerandoDesafioB();
+}
+
+bool resolverDesafioC(String senhaCorretaDesafioc, String keypressed)
+{
+  return resolverDesafioB(senhaCorretaDesafioc, keypressed);
 }
 
 bool resolverDesafioB(String senhaCorretaDesafioB, String keypressed)
@@ -499,6 +506,15 @@ void loop()
 
         delay(1500);
         gerarEExibirDesafioB();
+      }
+      else if (GLOBAL.opcaoJogo == 'C')
+      {
+        delay(800);
+        resposta = resolverDesafioC(GLOBAL.senhaCorretaDesafioC, GLOBAL.teclasDigitadas);
+        exibirResultado(resposta);
+
+        delay(1500);
+        gerarEExibirDesafioC();
       }
 
       GLOBAL.teclasDigitadas = "";
