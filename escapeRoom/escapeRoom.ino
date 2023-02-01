@@ -66,6 +66,7 @@ struct tempoLimite
   int segundos;
   unsigned long tempoTotalEmMilissegundos;
   unsigned long inicioDoContador;
+  unsigned long tempoFinal;
 };
 
 struct variaveisGlobais
@@ -273,6 +274,15 @@ bool resolverDesafioC(String senhaCorretaDesafioc, String keypressed)
   return verificarSeSenhaDigitadaECorreta(senhaCorretaDesafioc, keypressed);
 }
 
+void exibirMensagemTempoExcedido()
+{
+  lcd.clear();
+  lcd.setCursor(0, 0);
+  lcd.print("Excedeu o limite");
+  lcd.setCursor(0, 1);
+  lcd.print("De tempo !");
+}
+
 // Led RGB
 //---------------------------------------------------------------------------------------------
 
@@ -429,6 +439,14 @@ void barraDeProgresso(String texto, int tempoDelay)
   }
 }
 
+void travarSistema()
+{
+  while (true)
+  {
+    delay(1);
+  }
+}
+
 // Carregamento inicial
 //---------------------------------------------------------------------------------------------
 
@@ -441,6 +459,7 @@ void inicializarVariaveisGlobais()
   GLOBAL.senhaCorretaDesafioC = "";
 
   GLOBAL.tempoLimiteDesafioC.inicioDoContador = 0;
+  GLOBAL.tempoLimiteDesafioC.tempoFinal = 0;
   GLOBAL.tempoLimiteDesafioC.minutos = 0;
   GLOBAL.tempoLimiteDesafioC.segundos = 0;
   GLOBAL.tempoLimiteDesafioC.tempoTotalEmMilissegundos = 0;
@@ -504,7 +523,10 @@ void configurarAOpcoesDoJogo()
 
           // iniciar contador
           GLOBAL.tempoLimiteDesafioC.inicioDoContador = millis();
+          GLOBAL.tempoLimiteDesafioC.tempoFinal = GLOBAL.tempoLimiteDesafioC.inicioDoContador + GLOBAL.tempoLimiteDesafioC.tempoTotalEmMilissegundos;
+
           log("inicioDoContador: " + (String)GLOBAL.tempoLimiteDesafioC.inicioDoContador);
+          log("tempoFinal: " + (String)GLOBAL.tempoLimiteDesafioC.tempoFinal);
 
           gerarEExibirDesafioC();
         }
@@ -565,7 +587,7 @@ void loop()
   // teclado
   if (keypressed != NO_KEY)
   {
-    //log((String)keypressed);
+    // log((String)keypressed);
 
     acionarSomELuzDaTeclaDigitada();
     bool resposta;
@@ -621,5 +643,13 @@ void loop()
   if (GLOBAL.opcaoJogo == 'C')
   {
     unsigned long tempoAtual = millis();
+    if (tempoAtual >= GLOBAL.tempoLimiteDesafioC.tempoFinal)
+    {
+      log("Acabou o tempo!");
+      log("Tempo atual: " + (String)tempoAtual);
+
+      exibirMensagemTempoExcedido();
+      travarSistema();
+    }
   }
 }
