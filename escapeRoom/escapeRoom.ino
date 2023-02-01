@@ -65,6 +65,7 @@ struct tempoLimite
   int minutos;
   int segundos;
   unsigned long tempoTotalEmMilissegundos;
+  unsigned long inicioDoContador;
 };
 
 struct variaveisGlobais
@@ -262,6 +263,8 @@ void defineSenhaCorretaDesafioC()
 void gerarEExibirDesafioC()
 {
   gerandoDesafioB();
+  GLOBAL.tempoLimiteDesafioC.inicioDoContador = millis();
+  log("inicioDoContador: " + (String)GLOBAL.tempoLimiteDesafioC.inicioDoContador);
 }
 
 bool resolverDesafioC(String senhaCorretaDesafioc, String keypressed)
@@ -435,7 +438,11 @@ void inicializarVariaveisGlobais()
   GLOBAL.perguntaDesafioA.resposta = 0;
   GLOBAL.senhaCorretaDesafioB = "";
   GLOBAL.senhaCorretaDesafioC = "";
-  GLOBAL.exibirLog = true;
+
+  GLOBAL.tempoLimiteDesafioC.inicioDoContador = 0;
+  GLOBAL.tempoLimiteDesafioC.minutos = 0;
+  GLOBAL.tempoLimiteDesafioC.segundos = 0;
+  GLOBAL.tempoLimiteDesafioC.tempoTotalEmMilissegundos = 0;
 }
 
 void carregandoJogo()
@@ -505,7 +512,15 @@ void configurarAOpcoesDoJogo()
 
 void setup()
 {
+
+#ifdef ARDUINO_AVR_NANO
+  // código específico para o Arduino Nano
+  GLOBAL.exibirLog = false;
+#else
+  // código para outras placas
   GLOBAL.exibirLog = true;
+#endif
+
   Serial.begin(9600);
 
   log("INICIANDO O SETUP");
@@ -540,14 +555,15 @@ void setup()
 void loop()
 {
   char keypressed = myKeypad.getKey();
-  log(keypressed);
+  log((String)keypressed);
 
+  // teclado
   if (keypressed != NO_KEY)
   {
     acionarSomELuzDaTeclaDigitada();
     bool resposta;
 
-    if (keypressed == '#')
+    if (keypressed == '#') // simula a tecla enter
     {
       if (GLOBAL.opcaoJogo == 'A')
       {
@@ -579,7 +595,7 @@ void loop()
 
       GLOBAL.teclasDigitadas = "";
     }
-    else if (keypressed == '*')
+    else if (keypressed == '*') // simula a tecla de apagar
     {
       limparResposta();
       if (GLOBAL.opcaoJogo == 'A')
@@ -592,5 +608,11 @@ void loop()
       lcd.print(keypressed);
       GLOBAL.teclasDigitadas += (String)keypressed;
     }
+  }
+
+  // cronômetro
+  if (GLOBAL.opcaoJogo == 'C')
+  {
+    unsigned long tempoAtual = millis();
   }
 }
