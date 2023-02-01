@@ -193,7 +193,7 @@ bool resolverDesafioB(String senhaCorretaDesafioB, String keypressed)
   return (senhaCorretaDesafioB == keypressed);
 }
 
-// DESAFIO B
+// DESAFIO C
 //---------------------------------------------------------------------------------------------
 
 void defineTempoLimiteDoDesafioC()
