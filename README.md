@@ -22,7 +22,7 @@ Na configuração do LCD pode ser que seja necessário alterar o endereço. No c
 
 ```LiquidCrystal_I2C lcd(0x27, 16, 2);```
 
-Mas o 0x27 pode variarar para 0x26, 0x20 etc.
+O 0x27 pode variarar para 0x26, 0x20 etc.
 
 ### Componentes necessários
 
