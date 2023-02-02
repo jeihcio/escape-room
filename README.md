@@ -4,10 +4,18 @@ Projeto desenvolvido para Arduino Uno
 ![Esquema](/EsquemaEletronico.png)
 
 ## Instruções
-Instalar a biblioteca "keypad.zip" que está na pasta [bibliotecas](/Bibliotecas)
+
+Funções especiais das teclas:
+
+- \# - Representa a tecla enter
+- \* - Representa a tecla de backspace (apagar)
+
+<b>Obs:</b> A tecla de backspace só funciona na hora das respostas dos jogos
 
 ### Instalação
-Sketch > Incluir Biblioteca > Adicionar biblioteca .ZIP
+<p>Instalar a biblioteca "keypad.zip" que está na pasta <a href="/Bibliotecas">bibliotecas</a></p>
+<p>Depois vai em: <br/>
+Sketch > Incluir Biblioteca > Adicionar biblioteca .ZIP</p>
 
 #### Atenção
 Na configuração do LCD pode ser que seja necessário alterar o endereço. No código está:
